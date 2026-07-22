@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.back.json",
   "include": ["src/**/*"],
-  "references": [{ "path": "../shared" }, { "path": "../../stream" }],
+  "references": [{ "path": "../shared" }],
 
   "compilerOptions": {
     "rootDir": "src",
@@ -11,7 +11,6 @@
     "paths": {
       "~/*": ["./src/*"],
       "~shared/*": ["../shared/*"],
-      "~stream/*": ["../../stream/*"]
     }
   }
 }

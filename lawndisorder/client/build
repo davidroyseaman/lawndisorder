@@ -10,11 +10,7 @@ export WSS_SERVER=wss://streams.$DOMAIN
 # Install dependencies
 npm ci
 
-# Install dependencies in shared projects
-cd ../../stream
-npm ci
-
-cd ../lawndisorder/shared
+cd ../shared
 npm ci
 
 
