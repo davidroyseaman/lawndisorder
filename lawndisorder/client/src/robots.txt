@@ -1,0 +1,7 @@
+# Should allow all robots to access everything.
+
+User-agent: *
+Disallow:
+
+User-agent: *
+Allow: /

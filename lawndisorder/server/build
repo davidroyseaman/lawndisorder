@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# e: exit on any error, u: exit on unset vars, x: print every line, o pipefail: require entire | pipe to succeed.
+set -euxo pipefail
+
+IMAGE_NAME=lawndisorder-server
+
+# Install dependencies
+npm ci
+
+# Install dependencies in shared projects
+cd ../../stream
+npm ci
+
+cd ../lawndisorder/shared
+npm ci
+
+
+# Return to main project directory
+cd ../server
+
+npm run build-ts
+npm run build-js
+
+docker build . --file Dockerfile --tag $IMAGE_NAME
+
+IMAGE_ID=$DOCKER_REGISTRY_URL_PREFIX/$IMAGE_NAME
+
+# Change all uppercase to lowercase
+IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+# Strip git ref prefix from version
+IMAGE_TAG=$GITHUB_SHA
+echo IMAGE_ID=$IMAGE_ID
+echo IMAGE_TAG=$IMAGE_TAG
+docker tag $IMAGE_NAME $IMAGE_ID:$IMAGE_TAG
+docker push $IMAGE_ID:$IMAGE_TAG

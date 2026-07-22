@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+/*#app * {
+  box-shadow: inset 0px 0px 5px blue;
+}
+*/
+
+svg {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+/*body {
+  background-image: url(./dark-honeycomb.png);
+}
+*/

@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.front.json",
+  "include": ["src/**/*"],
+  "references": [{ "path": "../shared" }, { "path": "../../stream" }],
+
+  "compilerOptions": {
+    "rootDir": "src",
+    "baseUrl": ".",
+    "outDir": "out-tsc",
+
+    "paths": {
+      "~/*": ["./src/*"],
+      "~shared/*": ["../shared/*"],
+      "~stream/*": ["../../stream/*"]
+    }
+  }
+}

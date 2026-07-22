@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# e: exit on any error, u: exit on unset vars, x: print every line, o pipefail: require entire | pipe to succeed.
+set -euxo pipefail
+
+npm ci
+npx tsc

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lawndisorder-client-deployment
+  labels:
+    app: lawndisorder-client
+spec:
+  selector:
+    matchLabels:
+      app: lawndisorder-client
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: lawndisorder-client
+    spec:
+      containers:
+        - name: lawndisorder-client # ???
+          image: "replaced by deployment"
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: ghcr-docker

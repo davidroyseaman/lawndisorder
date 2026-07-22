@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.back.json",
+  "include": ["src/**/*"],
+  "references": [{ "path": "../../stream" }],
+
+  "compilerOptions": {
+    "rootDir": "src",
+    "baseUrl": ".",
+    "outDir": "dist",
+
+    "paths": {
+      "~/*": ["./src/*"],
+      "~stream/*": ["../../stream/*"]
+    }
+  }
+}

@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# e: exit on any error, u: exit on unset vars, x: print every line, o pipefail: require entire | pipe to succeed.
+set -euxo pipefail
+
+IMAGE_NAME=lawndisorder-client
+
+export REST_SERVER=https://rest.$DOMAIN
+export WSS_SERVER=wss://streams.$DOMAIN
+
+# Install dependencies
+npm ci
+
+# Install dependencies in shared projects
+cd ../../stream
+npm ci
+
+cd ../lawndisorder/shared
+npm ci
+
+
+# Return to main project directory
+cd ../client
+
+# Do each build separately so that errors are correctly piped.
+# (Can't do set -euxo pipefail in a package.json script)
+# npm run build # (doesn't handle errors correctly)
+npm run build-css
+npm run build-ts
+npm run build-js
+
+# Dockerise it
+docker build . --file Dockerfile --tag $IMAGE_NAME
+
+IMAGE_ID=$DOCKER_REGISTRY_URL_PREFIX/$IMAGE_NAME
+
+# Change all uppercase to lowercase
+IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+# Strip git ref prefix from version
+IMAGE_TAG=$GITHUB_SHA
+echo IMAGE_ID=$IMAGE_ID
+echo IMAGE_TAG=$IMAGE_TAG
+docker tag $IMAGE_NAME $IMAGE_ID:$IMAGE_TAG
+docker push $IMAGE_ID:$IMAGE_TAG

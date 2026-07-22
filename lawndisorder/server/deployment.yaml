@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lawndisorder-server-deployment
+  labels:
+    app: lawndisorder-server
+spec:
+  selector:
+    matchLabels:
+      app: lawndisorder-server
+  replicas: 1 # dsx restore to more when 2 nodes
+  template:
+    metadata:
+      labels:
+        app: lawndisorder-server
+    spec:
+      containers:
+        - name: lawndisorder-server # ???
+          image: "replaced by deployment"
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+          ports:
+            - containerPort: 8097
+      imagePullSecrets:
+        - name: ghcr-docker

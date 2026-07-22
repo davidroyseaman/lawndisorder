@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# e: exit on any error, u: exit on unset vars, x: print every line, o pipefail: require entire | pipe to succeed.
+set -euxo pipefail
+
+cd ../../stream
+npm ci
+
+cd ../lawndisorder/shared
+npm ci
+
+cd ../server
+npm ci
+
+npx tsc --build
+# npm run test

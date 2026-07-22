@@ -1,0 +1,10 @@
+lawndisorder/client:
+  - .github/fulldeploy
+  - lawndisorder/client/**
+  - lawndisorder/shared/**
+  # - stream/**
+lawndisorder/server:
+  - .github/fulldeploy
+  - lawndisorder/server/**
+  - lawndisorder/shared/**
+  # - stream/**

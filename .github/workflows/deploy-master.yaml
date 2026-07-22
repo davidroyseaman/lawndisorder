@@ -1,0 +1,101 @@
+name: deploy-master
+
+concurrency:
+  group: deployment # ${{ github.head_ref }}
+  cancel-in-progress: false
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+  # Run tests for any PRs.
+  # pull_request:
+
+env:
+  DOCKER_REGISTRY_URL_PREFIX: ghcr.io/${{ github.repository_owner }}
+  KUBECONFIG: kube_config.yaml
+  DOMAIN: ctrlfrk.com
+  LIVE_DOMAIN: games.zk.io
+jobs:
+  changes: # from https://github.com/dorny/paths-filter#examples
+    runs-on: ubuntu-latest
+    # Required permissions (apparently not?)
+    # permissions:
+    #   pull-requests: read
+    outputs:
+      # Expose matched filters as job 'packages' output variable
+      changed_projects: ${{ steps.filter.outputs.changes }}
+    steps:
+      - uses: actions/checkout@v3
+      # For pull requests it's not necessary to checkout the code
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: .github/filters.yaml
+
+  deployments:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: changes
+    if: ${{ !(needs.changes.outputs.changed_projects == '[]') }}
+    strategy:
+      fail-fast: false # dsx change this maybe
+      matrix:
+        folder: ${{ fromJSON(needs.changes.outputs.changed_projects) }}
+        # folder: [websocket-server, stream-monitor, serf/server, serf/client, shaders, puzzle, tunnel-dev, chasewheel, village/client, village/game-server, village/twitch-server, empty/client, empty/server, 3d/client, 3d/server]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: mikefarah/yq@master
+
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Store kubeconfig for kubectl login
+        working-directory: ${{ matrix.folder }}
+        run: 'echo "$KUBE_CONFIG" > kube_config.yaml'
+        shell: bash
+        env:
+          KUBE_CONFIG: ${{secrets.KUBE_CONFIG}}
+
+      # - name: Create k8s imagePullSecrets
+      #   working-directory: ${{ matrix.folder }}
+      #   run: |
+      #     kubectl create secret docker-registry ghcr-docker \
+      #       --docker-server=ghcr.io \
+      #       --docker-username=${{ github.actor }} \
+      #       --docker-password=${{ secrets.READ_PACKAGES_PAT }} \
+      #       --docker-email=anything@something.com \
+      #       --dry-run=client -o yaml \
+      #     | kubectl apply -f -
+
+      - name: Build step
+        working-directory: ${{ matrix.folder }}
+        run: |
+          echo ${{ matrix.folder }}: Build
+          if [ -f "./build" ]; then
+            ./build
+          fi
+
+      - name: Deploy step
+        working-directory: ${{ matrix.folder }}
+        run: |
+          echo ${{ matrix.folder }}: Deploy
+          if [ -f "./deploy" ]; then
+            ./deploy
+          fi
+
+      - name: Attempt to set failure status
+        if: ${{ failure() }}
+        # error, failure, pending, success
+        run: |
+          curl \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
+            -d '{"state":"failure","target_url":"https://example.com/build/status","description":"The build succeeded!","context":"oh-on/i-cant-believe-youve-done-this"}'

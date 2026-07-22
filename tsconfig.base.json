@@ -1,0 +1,41 @@
+{
+  // "include": ["src/**/*"], // Not inherited
+  // "references": [], // Not inherited
+  "compilerOptions": {
+    // Need to pick lib, dom means different for frontend/backend
+    // "lib": ["dom", "dom.iterable", "esnext"],
+    // "lib": ["es2021", "esnext.asynciterable"],
+
+    // frontend might want to target something else, check if esbuild handles it
+    // "target": "es2021",
+
+    "module": "es2022", // This gets set in the front/back subconfigs
+    // "moduleResolution": "node16",
+    // docs: "...unlike the Node.js resolution modes, bundler never requires
+    // file extensions on relative paths in imports."
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+
+    "skipLibCheck": true,
+    "allowJs": true,
+
+    "strict": true,
+
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // "baseUrl": ".", // Not inherited
+    // "outDir": "dist", // Not inherited
+
+    // "paths": {
+    //   "shared": ["shared/src"],
+    //   "client": ["client/src"],
+    //   "server": ["server/src"]
+    // }
+  }
+}
