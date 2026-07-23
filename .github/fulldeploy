@@ -5,3 +5,5 @@ I know it's hacky but it's easier than figuring out github actions.
 Last full deploy:
 
 23-7-26: Testing action config
+23-7-26: Added access to package
+  - https://github.com/users/davidroyseaman/packages/container/lawndisorder-server/settings
