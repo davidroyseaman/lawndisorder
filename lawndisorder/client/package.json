@@ -44,6 +44,6 @@
     "prettier": "^3.6.2",
     "serve": "^14.2.5",
     "tailwindcss": "^4.1.17",
-    "typescript": "^5.9.3"
+    "typescript": "^7.0.2"
   }
 }
