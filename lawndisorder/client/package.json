@@ -17,8 +17,8 @@
     "build-ts": "tsc --build",
     "build-js": "npm run esbuild-configured -- --minify --define:process.env.NODE_ENV=\\\"production\\\" --define:import.meta.env.WSS_SERVER=\\\"$WSS_SERVER\\\"",
     "build-css": "npx @tailwindcss/cli -i ./src/input.css -o ./out/output.css",
-    "build-static-files": "cp src/*.html out/; cp src/*.ico out/; cp src/*.png out/",
-    "esbuild-configured": "npx esbuild out-tsc/index.js --asset-names=[name] --public-path=/ --loader:.html=file --loader:.png=file --loader:.txt=file --bundle --outdir=out",
+    "build-static-files": "cp src/*.html out/; cp src/*.ico out/; cp src/*.png out/; cp src/*.jpg out/",
+    "esbuild-configured": "npx esbuild out-tsc/index.js --asset-names=[name] --public-path=/ --loader:.html=file --loader:.png=file --loader:.jpg=file --loader:.txt=file --bundle --outdir=out",
     "lint": "eslint ."
   },
   "author": "",
