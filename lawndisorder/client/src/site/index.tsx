@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes, Link } from "react-router-dom";
-import grass from "./grass.png";
+// import grass from "./grass.png";
+import grass from "./grass2.png";
 
 const Index = () => {
   return (
