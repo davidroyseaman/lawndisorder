@@ -39,7 +39,7 @@
     "@typescript-eslint/eslint-plugin": "^8.47.0",
     "@typescript-eslint/parser": "^8.47.0",
     "esbuild": "^0.25.0",
-    "eslint": "^9.39.1",
+    "eslint": "^10.8.0",
     "eslint-plugin-react": "^7.37.5",
     "prettier": "^3.6.2",
     "serve": "^14.2.5",
