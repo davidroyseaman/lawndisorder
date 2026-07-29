@@ -18,10 +18,10 @@ const Index = () => {
             <div
               style={{
                 fontSize: "10vw",
-                color: "rgba(127,255,64,0.2)",
-                textShadow: "2px 2px 5px rgba(0,0,0,0.5)",
+                color: "rgba(127,255,64,0.4)",
+                textShadow: "2px 2px 5px rgba(0,0,0,0.7)",
               }}
-              className="font-serif"
+              // className="font-serif"
             >
               LAWNDING PAGE
             </div>
