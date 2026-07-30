@@ -28,7 +28,7 @@ jobs:
       # Expose matched filters as job 'packages' output variable
       changed_projects: ${{ steps.filter.outputs.changes }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       # For pull requests it's not necessary to checkout the code
       - uses: dorny/paths-filter@v2
         id: filter
@@ -49,7 +49,7 @@ jobs:
         # folder: [websocket-server, stream-monitor, serf/server, serf/client, shaders, puzzle, tunnel-dev, chasewheel, village/client, village/game-server, village/twitch-server, empty/client, empty/server, 3d/client, 3d/server]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - uses: mikefarah/yq@master
 
       - name: Log into registry
