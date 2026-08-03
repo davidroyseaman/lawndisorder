@@ -20,8 +20,8 @@ const Index = () => {
                 fontSize: "10vw",
                 color: "rgba(127,255,64,0.6)",
                 textShadow: "2px 2px 5px rgba(0,0,0,0.7)",
-                background:
-                  "linear-gradient(0deg, rgba(1,1,1,0) 0%, rgba(1,1,1,0.6) 45%, rgba(0,0,0,0.4) 50%, rgba(1,1,1,0.6) 55%, rgba(1,1,1,0) 100%)",
+                // background:
+                // "linear-gradient(0deg, rgba(1,1,1,0) 0%, rgba(1,1,1,0.6) 45%, rgba(0,0,0,0.4) 50%, rgba(1,1,1,0.6) 55%, rgba(1,1,1,0) 100%)",
               }}
               className="font-serif"
             >
